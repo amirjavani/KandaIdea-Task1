@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+    font-family: IranYekanThin;
+    src: url(./fonts/IRANYekanThin.ttf);
+}
+@font-face {
+    font-family: IranYekanBold;
+    src: url(./fonts/IRANYekanBold.ttf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: IranYekanRegular;
+    src: url(./fonts/IRANYekanRegular.ttf);
+}
+
+@font-face {
+    font-family: IranYekanLight;
+    src: url(./fonts/IRANYekanLight.ttf);
+}
+@font-face {
+    font-family: farsiNum;
+    src: url(./fonts/IRANYekanRegularFaNum.ttf);
+}
+
+.font-num{
+    font-family: farsiNum;
+}
+.font-thin{
+    font-family: IranYekanThin;
+}
+.font-boldd{
+    font-family: IranYekanBold;
+}
+.font-regular{
+    font-family: IranYekanRegular;
+}
+.font-light{
+    font-family: IranYekanLight;
+}
+
+
+.fade-in {
+    animation: fadeInAnimation ease 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    width: 30px;
+    border-radius: 10px;
+    background: rgb(186, 186, 186);
+  }
+
+  span.swiper-pagination-bullet {
+    background: white;
+}
