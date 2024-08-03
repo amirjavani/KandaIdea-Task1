@@ -26,10 +26,13 @@ function MainPage() {
     },
   ]);
 
-  const [showLogin, setShowLogin] = useState(false);
+  const [showLogin, setShowLogin] = useState(true);
+  const [loginVal, setLoginVal] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [signInVal, setSignInVal] = useState(true);
+  const [signInError, setSignInError] = useState("");
   const [fName, setfName] = useState("");
   const [lName, setlName] = useState("");
   const [uName, setuName] = useState("");
@@ -57,20 +60,33 @@ function MainPage() {
         return;
       }
     }
+    setLoginVal(false);
     console.log("wrong username or password");
   };
+
   const validation = () => {
-    if (uName === "") {
+    if (
+      uName === "" &&
+      fName === "" &&
+      lName === "" &&
+      pass === "" &&
+      email === "" &&
+      phone === ""
+    ) {
       console.log("empty user name");
+      setSignInError("فیلدی نباید خالی باشد!");
+      setSignInVal(false);
       return false;
     }
     for (let index = 0; index < users.length; index++) {
       const user = users[index];
       if (user.userName === uName) {
+        setSignInError("این یوزر از قبل وجود دارد!");
         console.log("user already exist");
         return false;
       }
     }
+    setSignInError("");
     return true;
   };
   const signIn = () => {
@@ -125,20 +141,36 @@ function MainPage() {
 
         <input
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="p-2 border-b outline-none focus:border-purple-700 duration-300 "
+          onChange={(e) => {
+            setUsername(e.target.value);
+            setLoginVal(true);
+          }}
+          className={`${
+            loginVal ? "" : "border-red-700"
+          } p-2 border-b outline-none focus:border-purple-700 duration-300 `}
           type="text"
           placeholder="نام کاربری"
           required
         />
         <input
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="p-2 border-b outline-none focus:border-purple-700 duration-300 "
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setLoginVal(true);
+          }}
+          className={`${
+            loginVal ? "" : "border-red-700"
+          } p-2 border-b  outline-none focus:border-purple-700 duration-300 `}
           type="password"
           placeholder="کلمه عبور"
           required
         />
+        <span
+          className={`${
+            loginVal ? "d-none" : ""
+          }  ml-auto text-sm text-red-700`}>
+          رمز عبور یا نام کاربری اشتباه است!
+        </span>
         <span className="mr-auto text-xs font-thin">
           آیا نام کاربری یا کلمه ی را فراموش کردید؟
         </span>
@@ -153,7 +185,10 @@ function MainPage() {
           <hr className="w-full" />
         </div>
         <button
-          onClick={() => setShowLogin(!showLogin)}
+          onClick={() => {
+            setShowLogin(!showLogin);
+            setLoginVal(true);
+          }}
           className="text-white bg-purple-400 rounded-full mx-auto p-3 font-bold text-sm hover:bg-purple-500">
           ساخت حساب کاربری{" "}
         </button>
@@ -169,7 +204,9 @@ function MainPage() {
         <input
           value={fName}
           onChange={(e) => setfName(e.target.value)}
-          className="p-2 border-b outline-none focus:border-purple-700 duration-300 "
+          className={`${
+            signInVal ? "" : "border-red-700"
+          } font-num p-2 border-b outline-none focus:border-purple-700 duration-300`}
           type="text"
           placeholder="نام "
           required
@@ -177,7 +214,9 @@ function MainPage() {
         <input
           value={lName}
           onChange={(e) => setlName(e.target.value)}
-          className="p-2 border-b outline-none focus:border-purple-700 duration-300 "
+          className={`${
+            signInVal ? "" : "border-red-700"
+          } font-num p-2 border-b outline-none focus:border-purple-700 duration-300 `}
           type="text"
           placeholder="نام خانوادگی "
           required
@@ -185,7 +224,9 @@ function MainPage() {
         <input
           value={uName}
           onChange={(e) => setuName(e.target.value)}
-          className="p-2 border-b outline-none focus:border-purple-700 duration-300 "
+          className={`${
+            signInVal ? "" : "border-red-700"
+          } font-num p-2 border-b outline-none focus:border-purple-700 duration-300 `}
           type="text"
           placeholder="نام کاربری "
           required
@@ -193,7 +234,9 @@ function MainPage() {
         <input
           value={pass}
           onChange={(e) => setpass(e.target.value)}
-          className="p-2 border-b outline-none focus:border-purple-700 duration-300 "
+          className={`${
+            signInVal ? "" : "border-red-700"
+          } font-num p-2 border-b outline-none focus:border-purple-700 duration-300 `}
           type="password"
           placeholder="کلمه عبور"
           required
@@ -201,7 +244,9 @@ function MainPage() {
         <input
           value={email}
           onChange={(e) => setemail(e.target.value)}
-          className="p-2 border-b outline-none focus:border-purple-700 duration-300 "
+          className={`${
+            signInVal ? "" : "border-red-700"
+          } font-num p-2 border-b outline-none focus:border-purple-700 duration-300 `}
           type="text"
           placeholder="ایمیل "
           required
@@ -209,18 +254,20 @@ function MainPage() {
         <input
           value={phone}
           onChange={(e) => setphone(e.target.value)}
-          className="font-num p-2 border-b outline-none focus:border-purple-700 duration-300 "
+          className={`${
+            signInVal ? "" : "border-red-700"
+          } font-num p-2 border-b outline-none focus:border-purple-700 duration-300 `}
           type="text"
           placeholder="شماره تماس "
           required
         />
+        <span className="text-red-800 text-sm ml-auto">{signInError}</span>
 
         <button
           onClick={() => signIn()}
           className="text-white bg-purple-700 rounded-full mx-auto p-3 font-bold text-sm hover:bg-purple-800">
           ثبت نام!
         </button>
-
         <div className="flex flex-row gap-1 items-center">
           <hr className="w-full" />
           <p className="w-full text-xs">آیا حساب کاربری دارید؟</p>
